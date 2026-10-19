@@ -26,11 +26,11 @@ class IntegrationTestSupportTest extends IntegrationTestSupport {
     @DisplayName("테이블 비우기 후 모든 테이블이 비어 있다")
     void cleanerEmptiesTables() {
         Long walletId = jdbcTemplate.queryForObject(
-                "INSERT INTO saved_wallet (user_id, balance) VALUES (1, 1000) RETURNING id", Long.class);
+                "INSERT INTO wallet (user_id, balance) VALUES (1, 1000) RETURNING id", Long.class);
         jdbcTemplate.update(
-                "INSERT INTO saved_entry (wallet_id, entry_type, amount, balance_after, idempotency_key) "
+                "INSERT INTO wallet_entry (wallet_id, entry_type, amount, balance_after, idempotency_key) "
                         + "VALUES (?, 'SAVE', 1000, 1000, 'test-key')", walletId);
-        assertThat(jdbcTemplate.queryForObject("SELECT count(*) FROM saved_entry", Integer.class)).isOne();
+        assertThat(jdbcTemplate.queryForObject("SELECT count(*) FROM wallet_entry", Integer.class)).isOne();
 
         databaseCleaner.clean();
 
@@ -38,7 +38,7 @@ class IntegrationTestSupportTest extends IntegrationTestSupport {
                 "SELECT tablename FROM pg_tables WHERE schemaname = 'public' "
                         + "AND tablename <> 'flyway_schema_history'", String.class);
 
-        assertThat(tables).contains("saved_wallet", "saved_entry");
+        assertThat(tables).contains("wallet", "wallet_entry");
         tables.forEach(table ->
                 assertThat(jdbcTemplate.queryForObject(
                         "SELECT count(*) FROM " + table, Integer.class)).isZero());
