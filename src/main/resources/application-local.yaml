@@ -7,3 +7,16 @@ management:
   endpoint:
     health:
       show-details: always
+  # 로컬에는 OTLP 수집기가 없다. 트레이싱(traceId 생성)은 유지하고 외부 전송만 끈다.
+  otlp:
+    metrics:
+      export:
+        enabled: false
+  tracing:
+    export:
+      otlp:
+        enabled: false
+  logging:
+    export:
+      otlp:
+        enabled: false
