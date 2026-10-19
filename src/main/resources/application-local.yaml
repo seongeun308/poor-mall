@@ -1,0 +1,7 @@
+spring:
+  application:
+    name: poor-mall
+
+logging:
+  pattern:
+    console: "%d{HH:mm:ss.SSS} %-5level [%X{traceId:-},%X{userId:-}] %logger{36} - %msg%n"

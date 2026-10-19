@@ -1,0 +1,8 @@
+spring:
+  application:
+    name: poor-mall
+
+logging:
+  structured:
+    format:
+      console: logstash
