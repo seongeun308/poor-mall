@@ -81,9 +81,12 @@ public class WalletEntry {
 
     static WalletEntry reversal(WalletEntryType type, Long walletId, WalletEntry original,
                                 long amount, long balanceAfter, String idempotencyKey, String reasonCode) {
+        Guard.notNull(type, "entryType");
+        Guard.notNull(original, "original");
+        Guard.notNull(original.getId(), "originalEntryId");
+
         if (!type.isReversal()) {
-            throw new InvalidArgumentException("되돌림 유형이 아닙니다",
-                    Map.of("entryType", type));
+            throw new InvalidArgumentException("되돌림 유형이 아닙니다", Map.of("entryType", type));
         }
         if (amount != -original.getAmount()) {
             throw new InvalidArgumentException("되돌림 금액은 원 SAVE 금액과 같아야 합니다",
@@ -94,6 +97,10 @@ public class WalletEntry {
         // 되돌림도 원 SAVE 와 같은 결제에 묶어 둔다 (idx_wallet_entry_payment 로 함께 조회)
         return new WalletEntry(walletId, type, amount, balanceAfter,
                 idempotencyKey, original.getId(), original.getPaymentId(), reasonCode);
+    }
+
+    boolean belongsTo(Wallet target) {
+        return target.getId() != null && target.getId().equals(this.walletId);
     }
 
     private void validateShape(WalletEntryType entryType, long amount, Long reversalOf) {
