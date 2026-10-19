@@ -1,3 +1,5 @@
 spring:
   application:
     name: poor-mall
+  profiles:
+    default: local
