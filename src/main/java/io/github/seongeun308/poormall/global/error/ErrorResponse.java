@@ -12,7 +12,7 @@ public record ErrorResponse(
         String traceId,
         List<FieldError> errors
 ) {
-    public record FieldError(String field, String value, String message) {}
+    public record FieldError(String field, String message) {}
 
     public static ErrorResponse of(ErrorCode errorCode) {
         return new ErrorResponse(errorCode.getCode(), errorCode.getMessage(),
