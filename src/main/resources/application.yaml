@@ -12,3 +12,7 @@ spring:
         jdbc:
           time_zone: UTC
         default_batch_fetch_size: 100
+
+logging:
+  pattern:
+    correlation: "[%X{traceId:-},%X{userId:-}] "

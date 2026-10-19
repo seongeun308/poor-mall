@@ -1,6 +1,4 @@
 logging:
-  pattern:
-    console: "%d{HH:mm:ss.SSS} %-5level [%X{traceId:-},%X{userId:-}] %logger{36} - %msg%n"
   level:
     org.hibernate.SQL: debug
     org.hibernate.orm.jdbc.bind: trace
