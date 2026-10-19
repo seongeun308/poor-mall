@@ -3,3 +3,16 @@ spring:
     name: poor-mall
   profiles:
     default: local
+  jpa:
+    open-in-view: false
+    hibernate:
+      ddl-auto: validate
+    properties:
+      hibernate:
+        jdbc:
+          time_zone: UTC
+        default_batch_fetch_size: 100
+
+logging:
+  pattern:
+    correlation: "[%X{traceId:-},%X{userId:-}] "
